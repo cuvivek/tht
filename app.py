@@ -75,7 +75,7 @@ class mt_buffer(Resource):
         qout = multiprocessing.Queue()
         threads = []
         for i in range(1):
-            thread = threading.Thread(target=buffer, args=(mt_buffer_number, qout))
+            thread = Thread(target=buffer, args=(mt_buffer_number, qout))
             threads.append(thread)
         for thread in threads:
             thread.start()
