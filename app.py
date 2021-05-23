@@ -31,7 +31,7 @@ class mt(Resource):
     def get(self, mt_number):
         qout = multiprocessing.Queue()
         threads = []
-        for i in range(1):
+        for i in range(2):
             thread = Thread(target=fac, args=(mt_number, qout))
             threads.append(thread)
         for thread in threads:
@@ -44,7 +44,7 @@ class mp(Resource):
     def get(self, mp_number):
         qout = multiprocessing.Queue()
         processes = []
-        for i in range(1):
+        for i in range(2):
             p = Process(target=fac, args=(mp_number, qout))
             processes.append(p)
         for p in processes:
@@ -87,7 +87,7 @@ class mp_buffer(Resource):
     def get(self, mp_buffer_number):
         qout = multiprocessing.Queue()
         processes = []
-        for i in range(2):
+        for i in range(1):
             process = Process(target=buffer, args=(mp_buffer_number, qout))
             processes.append(process)
         for process in processes:
