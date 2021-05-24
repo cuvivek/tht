@@ -15,12 +15,20 @@ import queue
 
 app = Flask(__name__)
 api = Api(app)
+no = 1
 
 def fac(N,q):
-    result = math.factorial(int(N))
+    result = 1
+    if (int(N) == 0) or (int(N) == 1):
+        result = 1
+    else:
+        for i in range(1, N+1):
+            result = result*i
+    q.put(result) 
+    #result = math.factorial(int(N))
     #print(current_thread().getName())
     #print(os.getpid())
-    q.put(result)
+    #q.put(result)
 
 
 class Hello(Resource):
@@ -31,7 +39,7 @@ class mt(Resource):
     def get(self, mt_number):
         qout = multiprocessing.Queue()
         threads = []
-        for i in range(4):
+        for i in range(no):
             thread = Thread(target=fac, args=(mt_number, qout))
             threads.append(thread)
         for thread in threads:
@@ -44,7 +52,7 @@ class mp(Resource):
     def get(self, mp_number):
         qout = multiprocessing.Queue()
         processes = []
-        for i in range(4):
+        for i in range(no):
             p = Process(target=fac, args=(mp_number, qout))
             processes.append(p)
         for p in processes:
@@ -74,7 +82,7 @@ class mt_buffer(Resource):
     def get(self, mt_buffer_number):
         qout = multiprocessing.Queue()
         threads = []
-        for i in range(4):
+        for i in range(no):
             thread = Thread(target=buffer, args=(mt_buffer_number, qout))
             threads.append(thread)
         for thread in threads:
@@ -87,7 +95,7 @@ class mp_buffer(Resource):
     def get(self, mp_buffer_number):
         qout = multiprocessing.Queue()
         processes = []
-        for i in range(4):
+        for i in range(no):
             process = Process(target=buffer, args=(mp_buffer_number, qout))
             processes.append(process)
         for process in processes:
