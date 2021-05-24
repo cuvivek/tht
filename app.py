@@ -110,9 +110,10 @@ class mp_buffer(Resource):
 class ge_buffer(Resource):
     def get(self, ge_buffer_number):
         qout = multiprocessing.Queue()
-        g = gevent.spawn(buffer,ge_buffer_number,qout)
-        g.join()
-        #gevent.sleep(0.05)
+        threads = []
+        for i in range(no):
+            threads.append(gevent.spawn(buffer,ge_buffer_number,qout))
+        gevent.joinall(threads)
         return {'compressed_value': str(qout.get())}
 
 
