@@ -15,7 +15,7 @@ import queue
 
 app = Flask(__name__)
 api = Api(app)
-no = 1
+no = 4
 
 def fac(N,q):
     result = 1
@@ -64,8 +64,10 @@ class mp(Resource):
 class ge(Resource):
     def get(self, ge_number):
         qout = multiprocessing.Queue()
-        g = gevent.spawn(fac,ge_number,qout)
-        g.join()
+        threads = []
+        for i in range(no):
+            threads.append(gevent.spawn(fac,ge_number,qout))            
+        gevent.joinall(threads)
         return {'factorial': str(qout.get())}
 
 
