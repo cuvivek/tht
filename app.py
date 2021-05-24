@@ -15,7 +15,7 @@ import queue
 
 app = Flask(__name__)
 api = Api(app)
-no = 4
+no = 20
 
 def fac(N,q):
     result = 1
