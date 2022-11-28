@@ -7,5 +7,11 @@ pipeline {
       }
     }
 
+    stage('test') {
+      steps {
+        mail(subject: 'test jenkins', body: 'test', to: 'vivekcu81@gmail.com')
+      }
+    }
+
   }
 }
