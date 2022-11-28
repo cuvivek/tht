@@ -1,0 +1,11 @@
+pipeline {
+  agent any
+  stages {
+    stage('Checkout code') {
+      steps {
+        git(url: 'https://github.com/cuvivek/tht', branch: 'master', changelog: true)
+      }
+    }
+
+  }
+}
